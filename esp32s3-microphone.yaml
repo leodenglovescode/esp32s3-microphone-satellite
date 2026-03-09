@@ -1,0 +1,68 @@
+esphome:
+  name: esp32s3-microphone
+  friendly_name: esp32s3-microphone
+
+esp32:
+  board: esp32-s3-devkitc-1
+  framework:
+    type: esp-idf
+
+logger:
+  level: VERBOSE
+  logs:
+    voice_assistant: VERBOSE
+
+api:
+  encryption:
+    key: "YOUR_HOMEASSISTANT_API_KEY"
+  on_client_connected:
+    - delay: 2s
+    - voice_assistant.start_continuous:
+
+ota:
+  - platform: esphome
+    password: "YOUR_HOMEASSISTANT_OTA_PASSWORD"
+
+wifi:
+  ssid: "WIFI_NAME_SSID"
+  password: "WIFI_PASSWORD"
+
+psram:
+  mode: octal
+  speed: 80MHz
+
+i2s_audio:
+  i2s_lrclk_pin: GPIO15
+  i2s_bclk_pin: GPIO14
+
+microphone:
+  - platform: i2s_audio
+    id: table_mic
+    i2s_din_pin: GPIO13
+    adc_type: external
+    pdm: false
+    sample_rate: 16000
+    bits_per_sample: 32bit
+    channel: left
+
+voice_assistant:
+  id: va
+  microphone: table_mic
+  use_wake_word: true        # ← was false before, this is the main fix
+  noise_suppression_level: 2
+  auto_gain: 31dBFS
+  volume_multiplier: 1.5
+  on_wake_word_detected:
+    - logger.log: "Wake word detected!"
+  on_listening:
+    - logger.log: "Listening for command..."
+  on_stt_end:
+    - logger.log: "STT done"
+  on_error:
+    - logger.log:
+        level: ERROR
+        format: "Pipeline error:"
+
+
+
+        
