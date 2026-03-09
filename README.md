@@ -1,2 +1,35 @@
 # esp32s3-microphone-satellite
-Assist Satellite for HomeAssistant, built on a esp32s3.
+Simple microphone satellite for HomeAssistant Assist built with esp32s3 + inmp441 mic module, connected using ESPHome
+
+### Picture of finished module:
+<img width="565" height="264" alt="esp32s3" src="https://github.com/user-attachments/assets/b16a9916-0614-414d-a4ca-d52565f4ec67" />
+
+
+### Prerequisites:
+1. esp32s3 board (pins or without pins, you decide, I chose no pins and soldered it.)
+2. inmp441 microphone module
+3. Dupont wires / old thin wires (all ok as long as it fits)
+4. Working HomeAssistant setup (With ESPHome installed)
+5. Type-C wire with data transfer capabilities (to flash firmware)
+<br>
+   
+### Costs:
+esp32s3 (temu/aliexpress knockoff works just as fine): ~20 CNY (~3 USD)<br>
+inmp441: ~7 CNY (~1 USD)<br>
+Dupont wires: ~1 CNY (~0.14 USD)<br>
+Total: 28 CNY (4.06 USD)<br>
+
+### Wiring Table
+
+| ESP32S3 | INMP441 |
+| ------- | ------- |
+| 3V3     | VDD     |
+| GND     | GND     |
+| GPIO 13 | SD      |
+| GPIO 14 | SCK     |
+| GPIO 15 | WS      |
+| GND     | L/R     |
+<br>
+P.S Connecting L/R to GND means using the left channel of the microphone.
+
+
